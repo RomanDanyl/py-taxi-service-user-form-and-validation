@@ -13,9 +13,8 @@ class BaseLicenseForm(forms.ModelForm):
             raise ValidationError(
                 "License number must contain 8 symbols"
             )
-        for char in license_number[:3]:
-            if not char.isupper():
-                raise ValidationError("First 3 characters must be uppercase")
+        if not license_number[0:3].isupper() or not license_number[:3].isalpha():
+            raise ValidationError("First 3 characters must be uppercase")
         if not license_number[-5:].isdigit():
             raise ValidationError("Last 5 characters must be digits")
         return license_number
